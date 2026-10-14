@@ -35,9 +35,9 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 # --- Navegação ---
 function pmr     { Set-Location 'C:\repos\pague-menos-logistica-avanade-code' }
+function pmm     { cd 'C:\repos\pague-menos-logistica-avanade-code\src\app-distribuicao-cd' }
 function pmrepos { Set-Location 'C:\repos\pague-menos-logistica-avanade-code\src' }
-function ..      { Set-Location .. }
-function ...     { Set-Location ..\.. }
+
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
   Invoke-Expression (& { (zoxide init powershell | Out-String) })
