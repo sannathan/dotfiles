@@ -1,3 +1,29 @@
+function prompt {
+    # 1. Pega o caminho atual e encurta a pasta principal para "~"
+    $path = (Get-Location).Path -replace "^$([Regex]::Escape($env:USERPROFILE))", "~"
+
+    # 2. Define as cores exatas do Catppuccin Mocha usando ANSI RGB
+    $cReset   = "`e[0m"
+    $cGray    = "`e[38;2;108;112;134m"   # Overlay0 (Bordas)
+    $cBlue    = "`e[38;2;137;180;250m"   # Blue (Ícones)
+    $cCyan    = "`e[38;2;148;226;213m"   # Teal (Caminho)
+    $cMagenta = "`e[38;2;245;194;231m"   # Pink (Seta 1)
+    $cRed     = "`e[38;2;243;139;168m"   # Red (Admin)
+
+    # 3. Ícones da Nerd Font
+    $iconFolder = ""
+    $iconPrompt = "❯"
+    
+    # 4. Monta a Linha de Cima (Caminho e Informações)
+    $line1 = "`n$cGray╭─ $adminStr$cBlue$iconFolder $cCyan$path$cReset"
+    
+    # 6. Monta a Linha de Baixo (Local de digitação com setas em degradê)
+    $line2 = "`n$cGray╰─$cMagenta $iconPrompt$cBlue $iconPrompt$cCyan $iconPrompt$cReset"
+
+    # Retorna o visual final
+    return "$line1$line2"
+}
+
 # --- PSReadLine: autocomplete preditivo pelo histórico ---
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionSource History
