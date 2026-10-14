@@ -1,0 +1,9 @@
+{{- if eq .chezmoi.os "windows" }}
+["AppData/Local/nvim"]
+{{- else }}
+[".config/nvim"]
+{{- end }}
+    type = "git-repo"
+    url = "https://github.com/sannathan/nvim.git"
+    refreshPeriod = "168h"
+    pull.args = ["--ff-only"]

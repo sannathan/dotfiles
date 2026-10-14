@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.os "windows" -}}
+# Roda uma única vez; editar a lista faz rodar de novo
+$pkgs = @(
+  'Git.Git'
+  'Neovim.Neovim'
+  'Microsoft.PowerShell'
+  'Microsoft.WindowsTerminal'
+  'BurntSushi.ripgrep.MSVC'
+  'sharkdp.fd'
+  'junegunn.fzf'
+  'OpenJS.NodeJS.LTS'
+  'zig.zig'
+  'DEVCOM.JetBrainsMonoNerdFont'
+)
+foreach ($p in $pkgs) {
+  winget list --id $p -e --accept-source-agreements *> $null
+  if ($LASTEXITCODE -ne 0) {
+    winget install --id $p -e --silent --accept-source-agreements --accept-package-agreements
+  }
+}
+{{- end }}
