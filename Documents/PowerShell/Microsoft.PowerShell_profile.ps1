@@ -35,10 +35,14 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Cores Catppuccin Mocha para a lista de sugestões e a linha de comando
 Set-PSReadLineOption -Colors @{
+  # Lista de sugestões do histórico (ListView)
+  ListPrediction         = "`e[38;2;203;166;247m"   # Mauve: '>' e o [History]
+  ListPredictionSelected = "`e[48;2;69;71;90m"      # fundo Surface1 no item selecionado
+  ListPredictionTooltip  = "`e[38;2;127;132;156m"   # Overlay1: <History(10)>
+  Emphasis               = "`e[1;38;2;243;139;168m" # Red negrito: trecho digitado que deu match
   InlinePrediction       = "`e[38;2;108;112;134m"   # Overlay0
-  ListPrediction         = "`e[38;2;137;180;250m"   # Blue
-  ListPredictionSelected = "`e[48;2;69;71;90m"      # fundo Surface1
-  ListPredictionTooltip  = "`e[38;2;127;132;156m"   # Overlay1
+  Default                = "`e[38;2;205;214;244m"   # Text
+  Selection              = "`e[48;2;88;91;112m"     # Surface2
   Command                = "`e[38;2;137;180;250m"
   Parameter              = "`e[38;2;250;179;135m"
   String                 = "`e[38;2;166;227;161m"
