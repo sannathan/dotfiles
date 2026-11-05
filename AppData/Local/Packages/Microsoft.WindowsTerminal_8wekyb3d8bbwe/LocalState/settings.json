@@ -163,6 +163,7 @@
     {
         "defaults": 
         {
+            "startingDirectory": "%USERPROFILE%",
             "font": 
             {
                 "face": "JetBrainsMono Nerd Font"

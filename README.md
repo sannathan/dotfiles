@@ -27,6 +27,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply sannathan
 | PowerShell profile | `Documents\PowerShell\` | - |
 | Windows Terminal (atalhos vim) | `AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\` | - |
 | kitty / neofetch | - | `~/.config/` |
+| Copilot CLI (instruções globais + agents) | `~\.copilot\` | `~/.copilot/` |
+| Git ignore global (`.mcp.json` local) | `~\.gitignore_global` | `~/.gitignore_global` |
 
 ## Uso diário
 

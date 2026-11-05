@@ -32,11 +32,50 @@ Set-PSReadLineOption -HistoryNoDuplicates
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineOption -MaximumHistoryCount 10000
+# Cores Catppuccin Mocha para a lista de sugestões e a linha de comando
+Set-PSReadLineOption -Colors @{
+  InlinePrediction       = "`e[38;2;108;112;134m"   # Overlay0
+  ListPrediction         = "`e[38;2;137;180;250m"   # Blue
+  ListPredictionSelected = "`e[48;2;69;71;90m"      # fundo Surface1
+  ListPredictionTooltip  = "`e[38;2;127;132;156m"   # Overlay1
+  Command                = "`e[38;2;137;180;250m"
+  Parameter              = "`e[38;2;250;179;135m"
+  String                 = "`e[38;2;166;227;161m"
+  Operator               = "`e[38;2;148;226;213m"
+  Variable               = "`e[38;2;245;194;231m"
+  Comment                = "`e[38;2;108;112;134m"
+}
+
+# Ctrl+r: busca no histórico com fzf
+function Invoke-FzfHistory {
+  $line = Get-Content (Get-PSReadLineOption).HistorySavePath |
+    Select-Object -Unique |
+    fzf --tac --no-sort --height 40% --layout reverse --border rounded --prompt '❯ ' `
+        --color 'bg+:#313244,fg+:#cdd6f4,hl:#f38ba8,hl+:#f38ba8,pointer:#f5e0dc,prompt:#cba6f7,border:#6c7086'
+  if ($line) {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert($line)
+  }
+}
+if (Get-Command fzf -ErrorAction SilentlyContinue) {
+  Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock { Invoke-FzfHistory }
+}
+
+# --- eza (ls moderno) ---
+if (Get-Command eza -ErrorAction SilentlyContinue) {
+  Remove-Item Alias:ls -Force -ErrorAction SilentlyContinue
+  function ls { eza --icons --group-directories-first @args }
+  function ll { eza -l --icons --git --group-directories-first --time-style relative @args }
+  function la { eza -la --icons --git --group-directories-first @args }
+  function lt { eza --tree --level 2 --icons --git-ignore @args }
+}
 
 # --- Navegação ---
 function pmr     { Set-Location 'C:\repos\pague-menos-logistica-avanade-code' }
 function pmm     { cd 'C:\repos\pague-menos-logistica-avanade-code\src\app-distribuicao-cd' }
 function pmrepos { Set-Location 'C:\repos\pague-menos-logistica-avanade-code\src' }
+function pmb { Set-Location 'C:\repos\pague-menos-logistica-avanade-code\src\api-auditoria-deposito' }
 
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
