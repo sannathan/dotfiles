@@ -69,10 +69,10 @@ if (Get-Command fzf -ErrorAction SilentlyContinue) {
 # --- eza (ls moderno) ---
 if (Get-Command eza -ErrorAction SilentlyContinue) {
   Remove-Item Alias:ls -Force -ErrorAction SilentlyContinue
-  function ls { eza --icons --group-directories-first @args }
-  function ll { eza -l --icons --git --group-directories-first --time-style relative @args }
+  function ls { eza -a --icons --group-directories-first @args }
+  function ll { eza -la --icons --git --group-directories-first --time-style relative @args }
   function la { eza -la --icons --git --group-directories-first @args }
-  function lt { eza --tree --level 2 --icons --git-ignore @args }
+  function lt { eza --tree --level 2 -a --icons --git-ignore --ignore-glob .git @args }
 }
 
 # --- Navegação ---
